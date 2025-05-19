@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Équipements de Travail - Group Soges International</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.12.0/cdn.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/9.2.0/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/9.2.0/swiper-bundle.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'soges-gold': '#d1a874',
+                        'soges-dark': '#1a202c',
+                        'soges-light': '#f7f7f7',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .gradient-overlay {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.7));
+        }
+        
+        .transition-transform {
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        .equipment-card {
+            transition: all 0.3s ease;
+        }
+        
+        .equipment-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .category-item {
+            transition: all 0.3s ease;
+        }
+        
+        .category-item:hover {
+            transform: scale(1.03);
+            background-color: #f9f9f9;
+        }
+        
+        .category-item:hover .category-icon {
+            color: white;
+            background-color: #d1a874;
+        }
+
+        /* Responsive text sizing */
+        @media (max-width: 640px) {
+            .page-header h1 {
+                font-size: 1.75rem !important;
+            }
+        }
+
+        /* Fix for CTA buttons on small screens */
+        @media (max-width: 480px) {
+            .cta-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .cta-buttons a {
+                width: 100%;
+                margin-bottom: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-soges-light">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md fixed w-full z-50">
+        <div class="container mx-auto px-4 py-2">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <div class="mr-2 sm:mr-3">
+                        <img src="images/logo2.jpg" alt="Group Soges Logo" class="h-10 w-10 sm:h-14 sm:w-14 object-contain">
+                    </div>
+                    <div>
+                        <h1 class="text-lg sm:text-xl md:text-2xl font-bold text-soges-gold">GROUP SOGES</h1>
+                        <p class="text-xs md:text-sm text-gray-600 italic">Votre Sécurité et votre propriété sont notre Affaire</p>
+                    </div>
+                </div>
+                <div class="hidden md:flex space-x-6 items-center">
+                    <a href="index.html" class="text-gray-800 hover:text-soges-gold font-medium transition-colors">Accueil</a>
+                    <a href="a_propos.html" class="text-gray-800 hover:text-soges-gold font-medium transition-colors">À propos</a>
+                    <a href="service.html" class="text-gray-800 hover:text-soges-gold font-medium transition-colors">Services</a>
+                    <a href="equipement.html" class="text-soges-gold font-medium transition-colors">Équipements</a>
+                    <a href="contact.html" class="bg-soges-gold text-white px-4 py-2 rounded hover:bg-opacity-80 transition-all">Contact</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-800 focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="md:hidden hidden mt-2 pb-2">
+                <a href="index.html" class="block py-2 text-gray-800 hover:text-soges-gold transition-colors">Accueil</a>
+                <a href="a_propos.html" class="block py-2 text-gray-800 hover:text-soges-gold transition-colors">À propos</a>
+                <a href="service.html" class="block py-2 text-gray-800 hover:text-soges-gold transition-colors">Services</a>
+                <a href="equipement.html" class="block py-2 text-soges-gold transition-colors">Équipements</a>
+                <a href="contact.html" class="block py-2 text-gray-800 hover:text-soges-gold transition-colors">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="pt-24 md:pt-32 pb-10 md:pb-16 bg-soges-dark relative">
+        <div class="absolute inset-0 opacity-30">
+            <img src="images/equipe.jpg" alt="Security Equipment Background" class="w-full h-full object-cover">
+        </div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="page-header text-center text-white">
+                <h1 class="text-3xl md:text-5xl font-bold mb-4" data-aos="fade-up">Nos Équipements de Travail</h1>
+                <div class="w-16 h-1 bg-soges-gold mx-auto mb-4"></div>
+                <p class="text-lg max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    Des équipements professionnels et modernes pour garantir l'efficacité de nos services
+                </p>
+                <nav class="mt-6 text-sm md:text-base" data-aos="fade-up" data-aos-delay="200">
+                    <ol class="flex justify-center items-center space-x-2">
+                        <li><a href="index.html" class="hover:text-soges-gold transition-colors">Accueil</a></li>
+                        <li><span class="mx-2">/</span></li>
+                        <li class="text-soges-gold">Équipements</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </section>
+
+    <!-- Equipment Introduction -->
+    <section class="py-12 md:py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center mb-12" data-aos="fade-up">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4">La Qualité de Notre Matériel</h2>
+                <div class="w-16 h-1 bg-soges-gold mx-auto mb-6"></div>
+                <p class="text-gray-700">
+                    Chez Group Soges International, nous investissons constamment dans des équipements de pointe pour garantir la qualité et l'efficacité de nos services. Notre personnel est équipé de matériel professionnel adapté à chaque type de mission, qu'il s'agisse de sécurité privée, de vidéosurveillance ou d'entretien et salubrité.
+                </p>
+            </div>
+            
+            <!-- Equipment Category Icons -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <!-- Category 1 -->
+                <div class="text-center p-6 bg-white rounded-lg shadow-md" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-16 h-16 mx-auto bg-soges-gold bg-opacity-20 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-shield-alt text-2xl text-soges-gold"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Équipements de Sécurité</h3>
+                    <p class="text-gray-600">Matériel professionnel pour assurer la sécurité des personnes et des biens</p>
+                </div>
+                
+                <!-- Category 2 -->
+                <div class="text-center p-6 bg-white rounded-lg shadow-md" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-16 h-16 mx-auto bg-soges-gold bg-opacity-20 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-truck text-2xl text-soges-gold"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Infrastructure Logistique</h3>
+                    <p class="text-gray-600">Véhicules et équipements pour une intervention rapide et efficace</p>
+                </div>
+                
+                <!-- Category 3 -->
+                <div class="text-center p-6 bg-white rounded-lg shadow-md" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-16 h-16 mx-auto bg-soges-gold bg-opacity-20 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-broom text-2xl text-soges-gold"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Matériel d'Entretien</h3>
+                    <p class="text-gray-600">Équipements spécialisés pour des services d'entretien et de salubrité de qualité</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Security Equipment Section -->
+    <section id="equipements-securite" class="py-12 md:py-16 bg-soges-light">
+        <div class="container mx-auto px-4">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-2xl md:text-3xl font-bold text-center mb-4" data-aos="fade-up">Équipements de Sécurité</h2>
+                <div class="w-16 h-1 bg-soges-gold mx-auto mb-8"></div>
+                <p class="text-gray-700 text-center mb-10 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    Nos agents de gardiennage et de sécurité sont équipés de matériel professionnel leur permettant d'assurer efficacement la protection des personnes et des biens.
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Equipment 1 -->
+                    <div class="equipment-card bg-white rounded-lg shadow-md overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+                        <div class="h-48 overflow-hidden">
+                            <img src="images/intervention.jpg" alt="Équipements de Communication" class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <div class="w-12 h-12 bg-soges-gold rounded-full flex items-center justify-center mb-4">
+                                <i class="fas fa-satellite-dish text-white"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3">Équipements de Communication</h3>
+                            <ul class="space-y-2">
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-soges-gold mr-2"></i>
+                                    <span>Talkie-walkies professionnels</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-soges-gold mr-2"></i>
+                                    <span>Téléphones cellulaires dédiés</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-soges-gold mr-2"></i>
+                                    <span>Système de communication sécurisé</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-soges-gold mr-2"></i>
+                                    <span>Équipements de transmission rapide</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Equipment 2 -->
+                    <div class="equipment-card bg-white rounded-lg shadow-md overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+                        <div class="h-48 overflow-hidden">
+                            <img src="images/toujour pre.jpg" alt="Équipements de Protection" class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <div class="w-12 h-12 bg-soges-gold rounded-full flex items-center justify-center mb-4">
+                                <i class="fas fa-user-shield text-white"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3">Équipements de Protection</h3>
+                            <ul class="space-y-2">
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-soges-gold mr-2"></i>
+                                    <span>Matraques défensives</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-soges-gold mr-2"></i>
+                                    <span>Couteaux commando</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-soges-gold mr-2"></i>
+                                    <span>Menottes professionnelles</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-soges-gold mr-2"></i>
+                                    <span>Uniformes renforcés et adaptés</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Equipment 3 -->
+                    <div class="equipment-card bg-white rounded-lg shadow-md overflow-hidden" data-aos="fade-up" data-aos-delay="300">
+                        <div class="h-48 overflow-hidden">
+                            <img src="images/video-s.png" alt="Équipements de Détection" class="w-full h-full object-cover transform hover:scale-110 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <div class="w-12 h-12 bg-soges-gold rounded-full flex items-center justify-center mb-4">
+                                <i class="fas fa-search text-white"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3">Équipements de Détection</h3>
+                            <ul class="space-y-2">
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-soges-gold mr-2"></i>
+                                    <span>Détecteurs de métaux</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-soges-gold mr-2"></i>
+                                    <span>Lampes puissantes</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-soges-gold mr-2"></i>
+                                    <span>Sifflets d'alerte</span>
+                                </li>
+                                <li class="flex items-center">
+                                    <i class="fas fa-check text-soges-gold mr-2"></i>
+                                    <span>Équipements de contrôle d'accès</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Surveillance Equipment -->
+    <section id="surveillance-video" class="py-12 md:py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="md:flex items-center max-w-5xl mx-auto">
+                <div class="md:w-1/2 mb-8 md:mb-0 md:pr-10" data-aos="fade-right">
+                    <h2 class="text-2xl md:text-3xl font-bold mb-4">Équipements de Vidéosurveillance</h2>
+                    <div class="w-16 h-1 bg-soges-gold mb-6"></div>
+                    <p class="text-gray-700 mb-6">
+                        Nous utilisons des systèmes de vidéosurveillance de dernière génération pour offrir une protection optimale à nos clients. Nos équipements sont régulièrement mis à jour pour intégrer les dernières avancées technologiques.
+                    </p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <div class="w-8 h-8 bg-soges-gold bg-opacity-20 rounded-full flex items-center justify-center mt-1 mr-3">
+                                <i class="fas fa-video text-soges-gold"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">Caméras HD et 4K</h4>
+                                <p class="text-gray-600 text-sm">Caméras de surveillance haute définition avec vision nocturne et détection de mouvement</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-8 h-8 bg-soges-gold bg-opacity-20 rounded-full flex items-center justify-center mt-1 mr-3">
+                                <i class="fas fa-server text-soges-gold"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">Systèmes d'enregistrement</h4>
+                                <p class="text-gray-600 text-sm">Enregistreurs numériques NVR et DVR avec capacité de stockage étendue</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-8 h-8 bg-soges-gold bg-opacity-20 rounded-full flex items-center justify-center mt-1 mr-3">
+                                <i class="fas fa-wifi text-soges-gold"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">Surveillance à distance</h4>
+                                <p class="text-gray-600 text-sm">Accès à distance via smartphones et ordinateurs pour un contrôle permanent</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="w-8 h-8 bg-soges-gold bg-opacity-20 rounded-full flex items-center justify-center mt-1 mr-3">
+                                <i class="fas fa-bell text-soges-gold"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold mb-1">Système d'alarme connecté</h4>
+                                <p class="text-gray-600 text-sm">Alertes en temps réel connectées à notre brigade d'intervention et aux services de police</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="md:w-1/2" data-aos="fade-left">
+                    <img src="images/video.webp" alt="Équipements de vidéosurveillance" class="rounded-lg shadow-xl w-full">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Maintenance Equipment -->
+    <section id="materiel-entretien" class="py-12 md:py-16 bg-soges-light">
+        <div class="container mx-auto px-4">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-2xl md:text-3xl font-bold text-center mb-4" data-aos="fade-up">Matériel d'Entretien et de Salubrité</h2>
+                <div class="w-16 h-1 bg-soges-gold mx-auto mb-8"></div>
+                <p class="text-gray-700 text-center mb-10 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    Notre service d'entretien et de salubrité dispose d'équipements professionnels pour garantir des prestations de haute qualité dans tous types d'environnements.
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Equipment Category 1 -->
+                    <div class="category-item bg-white rounded-lg shadow-md p-6" data-aos="fade-up" data-aos-delay="100">
+                        <div class="flex items-start mb-4">
+                            <div class="category-icon w-12 h-12 bg-soges-gold bg-opacity-20 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-hands-wash text-xl text-soges-gold"></i>
+                            </div>
+                            <h3 class="text-xl font-bold">Équipements de Protection</h3>
+                        </div>
+                        <ul class="space-y-2 pl-16">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-soges-gold mr-2"></i>
+                                <span>Gants de caoutchouc ultrarésistants</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-soges-gold mr-2"></i>
+                                <span>Masques respiratoires</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-soges-gold mr-2"></i>
+                                <span>Lunettes de protection</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-soges-gold mr-2"></i>
+                                <span>Combinaisons de protection</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-soges-gold mr-2"></i>
+                                <span>Chaussures de sécurité antidérapantes</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Equipment Category 2 -->
+                    <div class="category-item bg-white rounded-lg shadow-md p-6" data-aos="fade-up" data-aos-delay="200">
+                        <div class="flex items-start mb-4">
+                            <div class="category-icon w-12 h-12 bg-soges-gold bg-opacity-20 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-broom text-xl text-soges-gold"></i>
+                            </div>
+                            <h3 class="text-xl font-bold">Équipements de Nettoyage</h3>
+                        </div>
+                        <ul class="space-y-2 pl-16">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-soges-gold mr-2"></i>
+                                <span>Aspirateurs industriels</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-soges-gold mr-2"></i>
+                                <span>Balais professionnels</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-soges-gold mr-2"></i>
+                                <span>Charrettes et brouettes</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-soges-gold mr-2"></i>
+                                <span>Produits d'entretien écologiques</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-soges-gold mr-2"></i>
+                                <span>Équipements de désinfection</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Equipment Category 3 -->
+                    <div class="category-item bg-white rounded-lg shadow-md p-6" data-aos="fade-up" data-aos-delay="300">
+                        <div class="flex items-start mb-4">
+                            <div class="category-icon w-12 h-12 bg-soges-gold bg-opacity-20 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-leaf text-xl text-soges-gold"></i>
+                            </div>
+                            <h3 class="text-xl font-bold">Entretien d'Espaces Verts</h3>
+                        </div>
+                        <ul class="space-y-2 pl-16">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-soges-gold mr-2"></i>
+                                <span>Tondeuses professionnelles</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-soges-gold mr-2"></i>
+                                <span>Débroussailleuses</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-soges-gold mr-2"></i>
+                                <span>Outils de jardinage</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-soges-gold mr-2"></i>
+                                <span>Systèmes d'arrosage</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-soges-gold mr-2"></i>
+                                <span>Équipements d'élagage</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Equipment Category 4 -->
+                    <div class="category-item bg-white rounded-lg shadow-md p-6" data-aos="fade-up" data-aos-delay="400">
+                        <div class="flex items-start mb-4">
+                            <div class="category-icon w-12 h-12 bg-soges-gold bg-opacity-20 rounded-full flex items-center justify-center mr-4">
+                                <i class="fas fa-toilet text-xl text-soges-gold"></i>
+                            </div>
+                            <h3 class="text-xl font-bold">Vidange et Assainissement</h3>
+                        </div>
+                        <ul class="space-y-2 pl-16">
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-soges-gold mr-2"></i><span>Camions de vidange spécialisés</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-soges-gold mr-2"></i>
+                                <span>Pompes haute pression</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-soges-gold mr-2"></i>
+                                <span>Équipements de débouchage</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-soges-gold mr-2"></i>
+                                <span>Matériel d'assainissement</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check text-soges-gold mr-2"></i>
+                                <span>Systèmes de désinfection</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Logistics Infrastructure -->
+    <section id="infrastructure-logistique" class="py-12 md:py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-5xl mx-auto">
+                <h2 class="text-2xl md:text-3xl font-bold text-center mb-4" data-aos="fade-up">Infrastructure Logistique</h2>
+                <div class="w-16 h-1 bg-soges-gold mx-auto mb-8"></div>
+                <p class="text-gray-700 text-center mb-10 max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    Group Soges International dispose d'une flotte de véhicules et d'équipements permettant d'intervenir rapidement et efficacement sur tout le territoire.
+                </p>
+                
+                <div class="md:flex items-center space-y-8 md:space-y-0">
+                    <div class="md:w-1/2 md:pr-8" data-aos="fade-right">
+                        <img src="images/intervention.jpg" alt="Véhicules d'intervention" class="rounded-lg shadow-xl w-full">
+                    </div>
+                    <div class="md:w-1/2 md:pl-8" data-aos="fade-left">
+                        <h3 class="text-xl font-bold mb-6">Notre Flotte de Véhicules</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <div class="w-8 h-8 bg-soges-gold bg-opacity-20 rounded-full flex items-center justify-center mt-1 mr-3">
+                                    <i class="fas fa-truck-pickup text-soges-gold"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">Véhicules Pick UP</h4>
+                                    <p class="text-gray-600 text-sm">5 véhicules Pick UP pour les interventions rapides et le transport d'équipements</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="w-8 h-8 bg-soges-gold bg-opacity-20 rounded-full flex items-center justify-center mt-1 mr-3">
+                                    <i class="fas fa-truck text-soges-gold"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">Véhicules Tactiques</h4>
+                                    <p class="text-gray-600 text-sm">Véhicules spécialement équipés pour les interventions d'urgence</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="w-8 h-8 bg-soges-gold bg-opacity-20 rounded-full flex items-center justify-center mt-1 mr-3">
+                                    <i class="fas fa-motorcycle text-soges-gold"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">Motos DT</h4>
+                                    <p class="text-gray-600 text-sm">Motos tout-terrain pour accéder rapidement aux zones difficiles</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="w-8 h-8 bg-soges-gold bg-opacity-20 rounded-full flex items-center justify-center mt-1 mr-3">
+                                    <i class="fas fa-shield-alt text-soges-gold"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">Fourgons Blindés</h4>
+                                    <p class="text-gray-600 text-sm">Véhicules sécurisés pour le transport de fonds et de biens précieux</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="w-8 h-8 bg-soges-gold bg-opacity-20 rounded-full flex items-center justify-center mt-1 mr-3">
+                                    <i class="fas fa-truck-loading text-soges-gold"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">Véhicules Spécialisés</h4>
+                                    <p class="text-gray-600 text-sm">Camions équipés pour les opérations de vidange et d'assainissement</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Maintenance Planning -->
+    <section class="py-12 md:py-16 bg-soges-light">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-2xl md:text-3xl font-bold text-center mb-4" data-aos="fade-up">Maintenance et Entretien des Équipements</h2>
+                <div class="w-16 h-1 bg-soges-gold mx-auto mb-8"></div>
+                <p class="text-gray-700 text-center mb-10" data-aos="fade-up" data-aos-delay="100">
+                    Group Soges International accorde une importance capitale à l'entretien régulier de ses équipements pour garantir leur bon fonctionnement et leur durabilité.
+                </p>
+                
+                <div class="bg-white rounded-lg shadow-lg p-8" data-aos="fade-up" data-aos-delay="200">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="text-xl font-bold mb-4 flex items-center">
+                                <i class="fas fa-tools text-soges-gold mr-3"></i>
+                                Programme de Maintenance
+                            </h3>
+                            <ul class="space-y-3">
+                                <li class="flex items-start">
+                                    <div class="w-6 h-6 bg-soges-gold rounded-full flex items-center justify-center mt-1 mr-3 flex-shrink-0">
+                                        <span class="text-white text-xs font-bold">1</span>
+                                    </div>
+                                    <p class="text-gray-700">
+                                        <strong>Inspection régulière</strong> : Vérification hebdomadaire de tous les équipements de sécurité et véhicules.
+                                    </p>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-6 h-6 bg-soges-gold rounded-full flex items-center justify-center mt-1 mr-3 flex-shrink-0">
+                                        <span class="text-white text-xs font-bold">2</span>
+                                    </div>
+                                    <p class="text-gray-700">
+                                        <strong>Maintenance préventive</strong> : Entretien planifié selon un calendrier strict pour prévenir les pannes.
+                                    </p>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-6 h-6 bg-soges-gold rounded-full flex items-center justify-center mt-1 mr-3 flex-shrink-0">
+                                        <span class="text-white text-xs font-bold">3</span>
+                                    </div>
+                                    <p class="text-gray-700">
+                                        <strong>Tests fonctionnels</strong> : Vérification régulière du bon fonctionnement des équipements électroniques.
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-4 flex items-center">
+                                <i class="fas fa-sync-alt text-soges-gold mr-3"></i>
+                                Renouvellement du Matériel
+                            </h3>
+                            <ul class="space-y-3">
+                                <li class="flex items-start">
+                                    <div class="w-6 h-6 bg-soges-gold rounded-full flex items-center justify-center mt-1 mr-3 flex-shrink-0">
+                                        <span class="text-white text-xs font-bold">1</span>
+                                    </div>
+                                    <p class="text-gray-700">
+                                        <strong>Politique de renouvellement</strong> : Remplacement régulier des équipements selon leur durée de vie.
+                                    </p>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-6 h-6 bg-soges-gold rounded-full flex items-center justify-center mt-1 mr-3 flex-shrink-0">
+                                        <span class="text-white text-xs font-bold">2</span>
+                                    </div>
+                                    <p class="text-gray-700">
+                                        <strong>Veille technologique</strong> : Mise à jour continue avec les dernières innovations du secteur.
+                                    </p>
+                                </li>
+                                <li class="flex items-start">
+                                    <div class="w-6 h-6 bg-soges-gold rounded-full flex items-center justify-center mt-1 mr-3 flex-shrink-0">
+                                        <span class="text-white text-xs font-bold">3</span>
+                                    </div>
+                                    <p class="text-gray-700">
+                                        <strong>Investissement constant</strong> : Budget dédié à l'amélioration et au renouvellement des équipements.
+                                    </p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call To Action -->
+    <section class="py-12 md:py-16 bg-soges-dark relative">
+        <div class="absolute inset-0 opacity-20">
+            <img src="images/la force tranquille.jpg" alt="Background" class="w-full h-full object-cover">
+        </div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-2xl md:text-3xl font-bold text-white mb-4" data-aos="fade-up">Pour en Savoir Plus sur Nos Équipements</h2>
+                <p class="text-gray-300 mb-8" data-aos="fade-up" data-aos-delay="100">
+                    Contactez-nous dès aujourd'hui pour une présentation détaillée de nos équipements et de nos services. Nos experts sont à votre disposition pour répondre à toutes vos questions.
+                </p>
+                <div class="cta-buttons flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 justify-center" data-aos="fade-up" data-aos-delay="200">
+                    <a href="contact.html" class="bg-soges-gold hover:bg-opacity-80 text-white font-semibold py-3 px-8 rounded-md transition-all inline-flex items-center justify-center">
+                        <i class="fas fa-envelope mr-2"></i>
+                        Nous contacter
+                    </a>
+                    <a href="service.html" class="border-2 border-white text-white hover:bg-white hover:text-soges-dark font-semibold py-3 px-8 rounded-md transition-all inline-flex items-center justify-center">
+                        <i class="fas fa-list-alt mr-2"></i>
+                        Découvrir nos services
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-soges-dark text-white pt-12 pb-6 sm:pt-16 sm:pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8 sm:mb-12">
+                <!-- About -->
+                <div>
+                    <div class="flex items-center mb-4 sm:mb-6">
+                        <img src="images/logo.jpg" alt="Group Soges Logo" class="h-10 w-10 sm:h-12 sm:w-12 object-contain mr-3">
+                        <div>
+                            <h3 class="text-lg font-bold text-soges-gold">GROUP SOGES</h3>
+                            <p class="text-xs text-gray-400">INTERNATIONAL</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-4 text-sm">
+                        Votre partenaire de confiance pour tous vos besoins de sécurité et d'entretien depuis plus de 14 ans en Afrique de l'Ouest.
+                    </p>
+                    <p class="text-gray-400 font-semibold text-sm">
+                        Votre Sécurité et votre propriété sont notre Affaire
+                    </p>
+                </div>
+                <!-- Contact -->
+                <div>
+                    <h3 class="text-lg font-bold text-soges-gold mb-4 sm:mb-6">Contactez-nous</h3>
+                    <div class="space-y-3 sm:space-y-4">
+                        <div class="flex items-start">
+                            <div class="text-soges-gold mr-2 sm:mr-3 mt-1">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <p class="text-gray-400 text-sm">
+                                Quartier Terminus en Face du Ministre de l'Environnement, Niamey, Niger
+                            </p>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="text-soges-gold mr-2 sm:mr-3 mt-1">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <p class="text-gray-400 text-sm">
+                                sogesniger_securite@yahoo.com
+                            </p>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="text-soges-gold mr-2 sm:mr-3 mt-1">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <p class="text-gray-400 text-sm">
+                                20 33 07 99 / 98 38 04 04
+                            </p>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="text-soges-gold mr-2 sm:mr-3 mt-1">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <p class="text-gray-400 text-sm">
+                                Lun-Ven: 8h-18h, Sam: 9h-13h
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-bold text-soges-gold mb-4 sm:mb-6">Liens Rapides</h3>
+                    <ul class="space-y-2 sm:space-y-3">
+                        <li>
+                            <a href="index.html" class="text-gray-400 hover:text-soges-gold transition-colors text-sm">
+                                <i class="fas fa-chevron-right mr-2 text-soges-gold"></i>
+                                Accueil
+                            </a>
+                        </li>
+                        <li>
+                            <a href="a_propos.html" class="text-gray-400 hover:text-soges-gold transition-colors text-sm">
+                                <i class="fas fa-chevron-right mr-2 text-soges-gold"></i>
+                                À propos
+                            </a>
+                        </li>
+                        <li>
+                            <a href="service.html" class="text-gray-400 hover:text-soges-gold transition-colors text-sm">
+                                <i class="fas fa-chevron-right mr-2 text-soges-gold"></i>
+                                Services
+                            </a>
+                        </li>
+                        <li>
+                            <a href="equipement.html" class="text-gray-400 hover:text-soges-gold transition-colors text-sm">
+                                <i class="fas fa-chevron-right mr-2 text-soges-gold"></i>
+                                Équipements
+                            </a>
+                        </li>
+                        <li>
+                            <a href="contact.html" class="text-gray-400 hover:text-soges-gold transition-colors text-sm">
+                                <i class="fas fa-chevron-right mr-2 text-soges-gold"></i>
+                                Contact
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Services -->
+                <div>
+                    <h3 class="text-lg font-bold text-soges-gold mb-4 sm:mb-6">Nos Équipements</h3>
+                    <ul class="space-y-2 sm:space-y-3">
+                        <li>
+                            <a href="#equipements-securite" class="text-gray-400 hover:text-soges-gold transition-colors text-sm">
+                                <i class="fas fa-chevron-right mr-2 text-soges-gold"></i>
+                                Équipements de Sécurité
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#surveillance-video" class="text-gray-400 hover:text-soges-gold transition-colors text-sm">
+                                <i class="fas fa-chevron-right mr-2 text-soges-gold"></i>
+                                Vidéosurveillance
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#materiel-entretien" class="text-gray-400 hover:text-soges-gold transition-colors text-sm">
+                                <i class="fas fa-chevron-right mr-2 text-soges-gold"></i>
+                                Matériel d'Entretien
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#infrastructure-logistique" class="text-gray-400 hover:text-soges-gold transition-colors text-sm">
+                                <i class="fas fa-chevron-right mr-2 text-soges-gold"></i>
+                                Infrastructure Logistique
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-6 sm:pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-500 text-xs sm:text-sm mb-3 md:mb-0">
+                        © 2025 GROUP SOGES INTERNATIONAL. Tous droits réservés.
+                    </p>
+                    <p class="text-gray-500 text-xs sm:text-sm">
+                        Conçu et développé par <a href="#" class="text-soges-gold hover:underline">NETCRAFTER</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#" id="back-to-top" class="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 bg-soges-gold text-white w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center shadow-lg transition-all transform scale-0 hover:bg-opacity-80 z-50">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
+
+        // Initialize AOS
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true,
+                mirror: false,
+                disable: window.innerWidth < 768 ? true : false // Disable on mobile for better performance
+            });
+            
+            // Back to Top Button with better performance
+            const backToTopButton = document.getElementById('back-to-top');
+            let isScrolling = false;
+            
+            window.addEventListener('scroll', function() {
+                if (!isScrolling) {
+                    isScrolling = true;
+                    
+                    // Use requestAnimationFrame for smoother animation
+                    requestAnimationFrame(function() {
+                        if (window.pageYOffset > 300) {
+                            backToTopButton.classList.remove('scale-0');
+                            backToTopButton.classList.add('scale-100');
+                        } else {
+                            backToTopButton.classList.remove('scale-100');
+                            backToTopButton.classList.add('scale-0');
+                        }
+                        
+                        isScrolling = false;
+                    });
+                }
+            });
+
+            // Smooth scrolling for anchor links with better performance
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        // Calculate offset based on screen size
+                        const offset = window.innerWidth < 768 ? 80 : 100;
+                        
+                        window.scrollTo({
+                            top: targetElement.offsetTop - offset,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Add resize listener for better responsiveness
+            window.addEventListener('resize', function() {
+                if (window.innerWidth >= 768) {
+                    document.getElementById('mobile-menu').classList.add('hidden');
+                }
+                
+                // Update AOS for screen resizes
+                AOS.refresh();
+            });
+        });
+    </script>
+</body>
+</html>

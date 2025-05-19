@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À Propos - Group Soges International</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.12.0/cdn.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'soges-gold': '#d1a874',
+                        'soges-dark': '#1a202c',
+                        'soges-light': '#f7f7f7',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .gradient-overlay {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8));
+        }
+        
+        .timeline-container {
+            padding-left: 2rem;
+            border-left: 2px solid #d1a874;
+            position: relative;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: -0.75rem;
+            width: 1.5rem;
+            height: 1.5rem;
+            background-color: #d1a874;
+            border-radius: 50%;
+        }
+        
+        .value-card {
+            transition: all 0.3s ease;
+        }
+        
+        .value-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .presence-marker {
+            width: 20px;
+            height: 20px;
+            background-color: #d1a874;
+            border-radius: 50%;
+            position: absolute;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
+        
+        .presence-marker::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 10px;
+            height: 10px;
+            background-color: white;
+            border-radius: 50%;
+        }
+        
+        .presence-marker:hover::before {
+            content: attr(data-city);
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #1a202c;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            white-space: nowrap;
+        }
+
+        /* Responsive fixes */
+        @media (max-width: 640px) {
+            .timeline-container {
+                padding-left: 1.5rem;
+            }
+            
+            .presence-marker {
+                width: 16px;
+                height: 16px;
+            }
+            
+            .presence-marker::after {
+                width: 8px;
+                height: 8px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-soges-light">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md fixed w-full z-50">
+        <div class="container mx-auto px-4 py-2">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <div class="mr-2 sm:mr-3">
+                        <img src="images/logo2.jpg" alt="Group Soges Logo" class="h-10 w-10 sm:h-14 sm:w-14 object-contain">
+                    </div>
+                    <div>
+                        <h1 class="text-lg sm:text-xl md:text-2xl font-bold text-soges-gold">GROUP SOGES</h1>
+                        <p class="text-xs md:text-sm text-gray-600 italic">Votre Sécurité et votre propriété sont notre Affaire</p>
+                    </div>
+                </div>
+                <div class="hidden md:flex space-x-6 items-center">
+                    <a href="index.html" class="text-gray-800 hover:text-soges-gold font-medium transition-colors">Accueil</a>
+                    <a href="a_propos.html" class="text-soges-gold font-medium transition-colors">À propos</a>
+                    <a href="service.html" class="text-gray-800 hover:text-soges-gold font-medium transition-colors">Services</a>
+                    <a href="equipement.html" class="text-gray-800 hover:text-soges-gold font-medium transition-colors">Équipements</a>
+                    <a href="contact.html" class="bg-soges-gold text-white px-4 py-2 rounded hover:bg-opacity-80 transition-all">Contact</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-800 focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="md:hidden hidden mt-2 pb-2">
+                <a href="index.html" class="block py-2 text-gray-800 hover:text-soges-gold transition-colors">Accueil</a>
+                <a href="a_propos.html" class="block py-2 text-soges-gold transition-colors">À propos</a>
+                <a href="service.html" class="block py-2 text-gray-800 hover:text-soges-gold transition-colors">Services</a>
+                <a href="equipement.html" class="block py-2 text-gray-800 hover:text-soges-gold transition-colors">Équipements</a>
+                <a href="contact.html" class="block py-2 text-gray-800 hover:text-soges-gold transition-colors">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-16 md:pt-20">
+        <div class="relative h-[30vh] sm:h-[40vh] md:h-[50vh]">
+            <div class="absolute inset-0 gradient-overlay"></div>
+            <img src="images/equipe.jpg" alt="Group Soges International Équipe" class="w-full h-full object-cover">
+            <div class="absolute inset-0 flex items-center justify-center">
+                <div class="text-center text-white px-4 sm:px-0" data-aos="fade-up" data-aos-delay="100">
+                    <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">À Propos de Nous</h1>
+                    <div class="w-16 sm:w-20 h-1 bg-soges-gold mx-auto"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section class="py-12 md:py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="w-full lg:w-1/2 lg:pr-8 xl:pr-12 mb-8 lg:mb-0" data-aos="fade-right">
+                    <img src="images/logo.jpg" alt="Group Soges Logo" class="rounded-lg shadow-xl mx-auto w-48">
+                    <div class="mt-6 text-center">
+                        <h3 class="text-xl sm:text-2xl font-bold text-soges-gold">GROUP SOGES INTERNATIONAL</h3>
+                        <p class="text-gray-600 mt-2 italic">"Votre Sécurité et votre propriété sont notre Affaire"</p>
+                    </div>
+                </div>
+                <div class="w-full lg:w-1/2" data-aos="fade-left">
+                    <h2 class="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6">Notre Histoire</h2>
+                    <div class="w-16 sm:w-20 h-1 bg-soges-gold mb-4 sm:mb-6"></div>
+                    <p class="text-gray-700 mb-4">
+                        Soges Niger est une société de sécurité privée, d'entretien et de salubrité créée par décision ministérielle n° 2502/M ISP/D /DGAPJ/D A J-R du 16 septembre 2009, inscrite au Registre de Commerce et de Crédit Mobilier sous le n° NI/NIA/B/1938 du 9/6/11 mod le 11/6/2020 et immatriculée (NIF) sous le numéro: 16 104/R.
+                    </p>
+                    <p class="text-gray-700 mb-4 sm:mb-6">
+                        En mars 2020, Soges Niger s'internationalise devenant ainsi GROUP SOGES INTERNATIONAL SARLU, avec la vision de proposer aux clients une meilleure expertise en sécurité privée, entretien et salubrité à travers l'amélioration continue de la qualité des prestations, le professionnalisme de ses équipes et le respect des normes et réglementations en vigueur.
+                    </p>
+                    <p class="text-gray-700 mb-4 sm:mb-6">
+                        Group Soges International a vu le jour dans une ère où l'Afrique de l'ouest est envahie par des menaces sécuritaires fortement considérables, mais en dépit de ce contexte d'insécurité grandissante, nous avons su nous imposer et être l'une des meilleures sociétés de Sécurité du Niger, grâce au sérieux de notre personnel, son intégrité, et son savoir-faire.
+                    </p>
+                    <p class="text-gray-700 font-semibold">
+                        Avec plus de 14 ans d'expérience, Group Soges International se donne comme objectif d'aller au-delà de la satisfaction clientèle.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="py-12 md:py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl sm:text-3xl font-bold mb-4" data-aos="fade-up">Notre Parcours</h2>
+                <div class="w-16 sm:w-20 h-1 bg-soges-gold mx-auto mb-4"></div>
+                <p class="text-gray-700 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    Découvrez les grandes étapes qui ont marqué l'évolution de Group Soges International
+                </p>
+            </div>
+            <div class="max-w-3xl mx-auto">
+                <!-- Timeline Item 1 -->
+                <div class="timeline-container mb-8" data-aos="fade-up" data-aos-delay="100">
+                    <div class="timeline-dot"></div>
+                    <div class="ml-6">
+                        <h3 class="text-xl font-bold text-soges-gold">2009</h3>
+                        <h4 class="text-lg font-semibold mb-2">Création de Soges Niger</h4>
+                        <p class="text-gray-700">
+                            Fondation de la société par décision ministérielle n° 2502/M ISP/D /DGAPJ/D A J-R du 16 septembre 2009.
+                        </p>
+                    </div>
+                </div>
+                <!-- Timeline Item 2 -->
+                <div class="timeline-container mb-8" data-aos="fade-up" data-aos-delay="200">
+                    <div class="timeline-dot"></div>
+                    <div class="ml-6">
+                        <h3 class="text-xl font-bold text-soges-gold">2011</h3>
+                        <h4 class="text-lg font-semibold mb-2">Inscription officielle</h4>
+                        <p class="text-gray-700">
+                            Inscription au Registre de Commerce et de Crédit Mobilier sous le n° NI/NIA/B/1938 du 9/6/11.
+                        </p>
+                    </div>
+                </div>
+                <!-- Timeline Item 3 -->
+                <div class="timeline-container mb-8" data-aos="fade-up" data-aos-delay="300">
+                    <div class="timeline-dot"></div>
+                    <div class="ml-6">
+                        <h3 class="text-xl font-bold text-soges-gold">2020</h3>
+                        <h4 class="text-lg font-semibold mb-2">Internationalisation</h4>
+                        <p class="text-gray-700">
+                            En mars 2020, Soges Niger s'internationalise et devient GROUP SOGES INTERNATIONAL SARLU, avec une vision d'expansion régionale.
+                        </p>
+                    </div>
+                </div>
+                <!-- Timeline Item 4 -->
+                <div class="timeline-container mb-8" data-aos="fade-up" data-aos-delay="400">
+                    <div class="timeline-dot"></div>
+                    <div class="ml-6">
+                        <h3 class="text-xl font-bold text-soges-gold">2021</h3>
+                        <h4 class="text-lg font-semibold mb-2">Expansion au Mali</h4>
+                        <p class="text-gray-700">
+                            Ouverture de GROUP SOGES International MALI SURCCURSAL à Bamako, RCCM. Ma. Bko. 2021. E.9588 du 17/09/2021.
+                        </p>
+                    </div>
+                </div>
+                <!-- Timeline Item 5 -->
+                <div class="timeline-container" data-aos="fade-up" data-aos-delay="500">
+                    <div class="timeline-dot"></div>
+                    <div class="ml-6">
+                        <h3 class="text-xl font-bold text-soges-gold">2024</h3>
+                        <h4 class="text-lg font-semibold mb-2">Expansion en Guinée Conakry</h4>
+                        <p class="text-gray-700">
+                            Ouverture de GROUP SOGES International GUINEE SURCCURSAL à Dixinn au quartier Camayenne, NIF : 740 827 472 RCCM : GN. TCC.2024. B. 13 844.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Activities Section -->
+    <section class="py-12 md:py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl sm:text-3xl font-bold mb-4" data-aos="fade-up">Nos Domaines d'Activités</h2>
+                <div class="w-16 sm:w-20 h-1 bg-soges-gold mx-auto mb-4"></div>
+                <p class="text-gray-700 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    Forte de plusieurs années d'expériences, le GROUP SOGES INTERNATIONAL est spécialisé dans les prestations de services suivantes
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Activity 1 -->
+                <div class="bg-soges-light rounded-lg shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+                    <div class="h-40 bg-soges-dark flex items-center justify-center">
+                        <i class="fas fa-shield-alt text-6xl text-soges-gold"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-soges-gold mb-3">Sécurité Privée</h3>
+                        <p class="text-gray-700">
+                            Notre cœur de métier : la protection des personnes et des biens à travers des services de gardiennage professionnel, de sécurité rapprochée, et d'intervention d'urgence.
+                        </p>
+                    </div>
+                </div>
+                <!-- Activity 2 -->
+                <div class="bg-soges-light rounded-lg shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+                    <div class="h-40 bg-soges-dark flex items-center justify-center">
+                        <i class="fas fa-clipboard-check text-6xl text-soges-gold"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-soges-gold mb-3">Protocole Événementiel</h3>
+                        <p class="text-gray-700">
+                            Organisation et sécurisation de vos événements avec un service de filtrage et d'accueil professionnel pour tout type de manifestation publique ou privée.
+                        </p>
+                    </div>
+                </div>
+                <!-- Activity 3 -->
+                <div class="bg-soges-light rounded-lg shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="300">
+                    <div class="h-40 bg-soges-dark flex items-center justify-center">
+                        <i class="fas fa-broom text-6xl text-soges-gold"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-soges-gold mb-3">Entretien et Salubrité</h3>
+                        <p class="text-gray-700">
+                            Services complets de nettoyage, d'entretien d'espaces verts, de désinfestation et d'assainissement pour garantir la propreté et l'hygiène de vos locaux.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Values Section -->
+    <section class="py-12 md:py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl sm:text-3xl font-bold mb-4" data-aos="fade-up">Nos Valeurs</h2>
+                <div class="w-16 sm:w-20 h-1 bg-soges-gold mx-auto mb-4"></div>
+                <p class="text-gray-700 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    Les principes qui guident nos actions au quotidien et forgent notre identité
+                </p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Value 1 -->
+                <div class="value-card bg-white rounded-lg shadow-lg p-6 text-center" data-aos="fade-up" data-aos-delay="100">
+                    <div class="text-soges-gold text-4xl mb-4">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Professionnalisme</h3>
+                    <p class="text-gray-700">
+                        Nous nous engageons à offrir des services de la plus haute qualité, en respectant les normes et réglementations en vigueur.
+                    </p>
+                </div>
+                <!-- Value 2 -->
+                <div class="value-card bg-white rounded-lg shadow-lg p-6 text-center" data-aos="fade-up" data-aos-delay="200">
+                    <div class="text-soges-gold text-4xl mb-4">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Fiabilité</h3>
+                    <p class="text-gray-700">
+                        La confiance de nos clients est notre priorité, nous sommes à leurs côtés 24h/24 pour garantir leur sécurité et leur tranquillité.
+                    </p>
+                </div>
+                <!-- Value 3 -->
+                <div class="value-card bg-white rounded-lg shadow-lg p-6 text-center" data-aos="fade-up" data-aos-delay="300">
+                    <div class="text-soges-gold text-4xl mb-4">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Intégrité</h3>
+                    <p class="text-gray-700">
+                        Nous agissons avec honnêteté et éthique dans toutes nos relations professionnelles, en plaçant l'intérêt de nos clients au centre de nos préoccupations.
+                    </p>
+                </div>
+                <!-- Value 4 -->
+                <div class="value-card bg-white rounded-lg shadow-lg p-6 text-center" data-aos="fade-up" data-aos-delay="400">
+                    <div class="text-soges-gold text-4xl mb-4">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Innovation</h3>
+                    <p class="text-gray-700">
+                        Nous recherchons constamment de nouvelles solutions pour améliorer nos services et répondre aux défis sécuritaires actuels et futurs.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Presence -->
+    <section class="py-12 md:py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl sm:text-3xl font-bold mb-4" data-aos="fade-up">Notre Présence</h2>
+                <div class="w-16 sm:w-20 h-1 bg-soges-gold mx-auto mb-4"></div>
+                <p class="text-gray-700 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    Nous sommes présents dans les huit (8) régions du Niger et dans trois (3) pays de la sous-région
+                </p>
+            </div>
+            <div class="relative w-full h-[400px] md:h-[500px] bg-gray-200 rounded-lg shadow-lg overflow-hidden" data-aos="fade-up">
+                <img src="images/carte.webp" alt="Carte d'Afrique de l'Ouest" class="w-full h-full object-cover">
+
+                
+                <!-- Legend -->
+                <div class="absolute bottom-4 left-4 bg-white p-3 rounded-lg shadow-md">
+                    <div class="flex items-center mb-2">
+                        <div class="w-4 h-4 bg-soges-gold rounded-full mr-2"></div>
+                        <span class="text-sm font-medium">Présence Group Soges</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Location 1 -->
+                <div class="bg-white rounded-lg shadow-lg p-6" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="text-xl font-bold text-soges-gold mb-3">Niger (Siège)</h3>
+                    <p class="text-gray-700 mb-3">
+                        Quartier Terminus en Face du Ministre de l'Environnement, BP:11105 Niamey-Niger
+                    </p>
+                    <p class="text-gray-700">
+                        <span class="font-semibold">Tél :</span> 20 33 07 99, 98 38 04 04, 96 40 05 50, 93 93 27 97<br>
+                        <span class="font-semibold">Email :</span> sogesniger_securite@yahoo.com
+                    </p>
+                </div>
+                <!-- Location 2 -->
+                <div class="bg-white rounded-lg shadow-lg p-6" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-xl font-bold text-soges-gold mb-3">Mali</h3>
+                    <p class="text-gray-700 mb-3">
+                        GROUP SOGES International MALI SURCCURSAL est situé à BAMAKO, KORIFINA Nord près de la mosquée
+                    </p>
+                    <p class="text-gray-700">
+                        <span class="font-semibold">RCCM :</span> Ma. Bko. 2021. E.9588 du 17/09/2021<br>
+                        <span class="font-semibold">Tél :</span> +223 92 34 24 51
+                    </p>
+                </div>
+                <!-- Location 3 -->
+                <div class="bg-white rounded-lg shadow-lg p-6" data-aos="fade-up" data-aos-delay="300">
+                    <h3 class="text-xl font-bold text-soges-gold mb-3">Burkina Faso</h3>
+                    <p class="text-gray-700 mb-3">
+                        GROUP SOGES INTERNATIONAL SARLU, 01 BP 125 SAABA 01
+                    </p>
+                    <p class="text-gray-700">
+                        <span class="font-semibold">RCCM :</span> BFOUA2019B6808<br>
+                        <span class="font-semibold">NIF :</span> 00124846H<br>
+                        <span class="font-semibold">Tél :</span> +226 78 49 94 96 / 71 66 09 61
+                    </p>
+                </div>
+                <!-- Location 4 -->
+                <div class="bg-white rounded-lg shadow-lg p-6" data-aos="fade-up" data-aos-delay="400">
+                    <h3 class="text-xl font-bold text-soges-gold mb-3">Guinée Conakry</h3>
+                    <p class="text-gray-700 mb-3">
+                        GROUP SOGES International GUINEE SURCCURSAL est situé à Dixinn au quartier Camayenne
+                    </p>
+                    <p class="text-gray-700">
+                        <span class="font-semibold">NIF :</span> 740 827 472<br>
+                        <span class="font-semibold">RCCM :</span> GN. TCC.2024. B. 13 844<br>
+                        <span class="font-semibold">Tél :</span> +224 620 28 85 45
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Equipment Section -->
+    <section class="py-12 md:py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl sm:text-3xl font-bold mb-4" data-aos="fade-up">Notre Équipement</h2>
+                <div class="w-16 sm:w-20 h-1 bg-soges-gold mx-auto mb-4"></div>
+                <p class="text-gray-700 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    Des équipements professionnels pour garantir des services de qualité
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Security Equipment -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+                    <div class="bg-soges-dark p-4 text-white">
+                        <h3 class="text-xl font-bold flex items-center">
+                            <i class="fas fa-shield-alt text-soges-gold mr-3"></i>
+                            Équipement de Sécurité
+                        </h3>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-700 mb-4">
+                            Pour assurer la protection des personnes et des biens, nos agents de gardiennage et de sécurité sont équipés de :
+                        </p>
+                        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-soges-gold mr-2"></i>
+                                <span>Matraques</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-soges-gold mr-2"></i>
+                                <span>Talkie-walkies</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-soges-gold mr-2"></i>
+                                <span>Téléphones cellulaires</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-soges-gold mr-2"></i>
+                                <span>Couteaux commando</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-soges-gold mr-2"></i>
+                                <span>Sifflets</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-soges-gold mr-2"></i>
+                                <span>Menottes</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-soges-gold mr-2"></i>
+                                <span>Lampes</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-soges-gold mr-2"></i>
+                                <span>Détecteurs de métaux</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- Cleaning Equipment -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+                    <div class="bg-soges-dark p-4 text-white">
+                        <h3 class="text-xl font-bold flex items-center">
+                            <i class="fas fa-spray-can text-soges-gold mr-3"></i>
+                            Équipement d'Entretien
+                        </h3>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-gray-700 mb-4">
+                            Le service de nettoyage, d'entretien et de salubrité dispose des matériels suivants :
+                        </p>
+                        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-soges-gold mr-2"></i>
+                                <span>Gants de caoutchouc ultrarésistants</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-soges-gold mr-2"></i>
+                                <span>Masques et lunettes de protection</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-soges-gold mr-2"></i>
+                                <span>Balais</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-soges-gold mr-2"></i>
+                                <span>Brouettes</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-soges-gold mr-2"></i>
+                                <span>Charrettes</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-soges-gold mr-2"></i>
+                                <span>Aspirateurs</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-soges-gold mr-2"></i>
+                                <span>Matériels de nettoyage</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-soges-gold mr-2"></i>
+                                <span>Produits d'entretien professionnels</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fleet Section -->
+    <section class="py-12 md:py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl sm:text-3xl font-bold mb-4" data-aos="fade-up">Notre Infrastructure Logistique</h2>
+                <div class="w-16 sm:w-20 h-1 bg-soges-gold mx-auto mb-4"></div>
+                <p class="text-gray-700 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    Une flotte moderne pour répondre efficacement à tous vos besoins
+                </p>
+            </div>
+            <div class="bg-gray-100 rounded-lg shadow-lg p-6 md:p-8" data-aos="fade-up">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Vehicle 1 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="h-48 bg-gray-300 flex items-center justify-center">
+                            <i class="fas fa-truck-pickup text-6xl text-gray-500"></i>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-lg font-bold text-soges-gold mb-2">Véhicules Pick UP</h3>
+                            <p class="text-gray-700">
+                                Notre flotte comprend 5 véhicules Pick UP pour les interventions de sécurité et les déplacements quotidiens.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Vehicle 2 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="h-48 bg-gray-300 flex items-center justify-center">
+                            <i class="fas fa-car text-6xl text-gray-500"></i>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-lg font-bold text-soges-gold mb-2">Véhicules d'Intervention</h3>
+                            <p class="text-gray-700">
+                                Des véhicules tactiques d'interventions d'urgence équipés pour répondre rapidement à toute situation de crise.
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Vehicle 3 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="h-48 bg-gray-300 flex items-center justify-center">
+                            <i class="fas fa-motorcycle text-6xl text-gray-500"></i>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-lg font-bold text-soges-gold mb-2">Motos</h3>
+                            <p class="text-gray-700">
+                                Des motos DT pour une mobilité optimale dans les zones urbaines et les interventions rapides.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="py-12 md:py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl sm:text-3xl font-bold mb-4" data-aos="fade-up">Pourquoi Nous Choisir</h2>
+                <div class="w-16 sm:w-20 h-1 bg-soges-gold mx-auto mb-4"></div>
+                <p class="text-gray-700 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+                    Ce qui fait la différence et nous distingue dans le secteur de la sécurité
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="md:col-span-2">
+                    <div class="bg-white rounded-lg shadow-lg p-6 md:p-8" data-aos="fade-up">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <!-- Reason 1 -->
+                            <div class="flex flex-col items-center text-center p-4">
+                                <div class="text-soges-gold text-4xl mb-4">
+                                    <i class="fas fa-certificate"></i>
+                                </div>
+                                <h3 class="text-lg font-bold mb-2">14+ Ans d'Expérience</h3>
+                                <p class="text-gray-700">
+                                    Plus d'une décennie d'expertise dans la sécurité et l'entretien, avec une connaissance approfondie du terrain.
+                                </p>
+                            </div>
+                            <!-- Reason 2 -->
+                            <div class="flex flex-col items-center text-center p-4">
+                                <div class="text-soges-gold text-4xl mb-4">
+                                    <i class="fas fa-user-tie"></i>
+                                </div>
+                                <h3 class="text-lg font-bold mb-2">Personnel Qualifié</h3>
+                                <p class="text-gray-700">
+                                    Des agents rigoureusement formés et régulièrement évalués pour garantir un service de haute qualité.
+                                </p>
+                            </div>
+                            <!-- Reason 3 -->
+                            <div class="flex flex-col items-center text-center p-4">
+                                <div class="text-soges-gold text-4xl mb-4">
+                                    <i class="fas fa-globe-africa"></i>
+                                </div>
+                                <h3 class="text-lg font-bold mb-2">Présence Régionale</h3>
+                                <p class="text-gray-700">
+                                    Une présence dans quatre pays d'Afrique de l'Ouest, offrant une couverture étendue pour vos besoins de sécurité.
+                                </p>
+                            </div>
+                            <!-- Reason 4 -->
+                            <div class="flex flex-col items-center text-center p-4">
+                                <div class="text-soges-gold text-4xl mb-4">
+                                    <i class="fas fa-cogs"></i>
+                                </div>
+                                <h3 class="text-lg font-bold mb-2">Solutions Sur Mesure</h3>
+                                <p class="text-gray-700">
+                                    Des services personnalisés adaptés à vos besoins spécifiques et à votre environnement.
+                                </p>
+                            </div>
+                            <!-- Reason 5 -->
+                            <div class="flex flex-col items-center text-center p-4">
+                                <div class="text-soges-gold text-4xl mb-4">
+                                    <i class="fas fa-headset"></i>
+                                </div>
+                                <h3 class="text-lg font-bold mb-2">Service 24/7</h3>
+                                <p class="text-gray-700">
+                                    Une disponibilité permanente avec des équipes prêtes à intervenir à tout moment, jour et nuit.
+                                </p>
+                            </div>
+                            <!-- Reason 6 -->
+                            <div class="flex flex-col items-center text-center p-4">
+                                <div class="text-soges-gold text-4xl mb-4">
+                                    <i class="fas fa-award"></i>
+                                </div>
+                                <h3 class="text-lg font-bold mb-2">Reconnu pour l'Excellence</h3>
+                                <p class="text-gray-700">
+                                    De nombreux témoignages de satisfaction de nos clients attestent de la qualité de nos services.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-12 md:py-16 bg-soges-dark">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-2xl sm:text-3xl font-bold text-white mb-4" data-aos="fade-up">Prêt à Collaborer avec Nous?</h2>
+            <p class="text-gray-300 max-w-2xl mx-auto mb-8" data-aos="fade-up" data-aos-delay="100">
+                Contactez-nous dès aujourd'hui pour discuter de vos besoins de sécurité et d'entretien. Notre équipe se fera un plaisir de vous proposer une solution adaptée à vos exigences.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4" data-aos="fade-up" data-aos-delay="200">
+                <a href="index.html#contact" class="bg-soges-gold hover:bg-opacity-80 text-white font-semibold py-3 px-8 rounded-md transition-all inline-block">
+                    Nous Contacter
+                </a>
+                <a href="index.html#services" class="border-2 border-soges-gold text-soges-gold hover:bg-soges-gold hover:text-white font-semibold py-3 px-8 rounded-md transition-all inline-block">
+                    Découvrir Nos Services
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-soges-dark text-white pt-12 pb-6 sm:pt-16 sm:pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8 sm:mb-12">
+                <!-- About -->
+                <div>
+                    <div class="flex items-center mb-4 sm:mb-6">
+                        <img src="images/logo.jpg" alt="Group Soges Logo" class="h-10 w-10 sm:h-12 sm:w-12 object-contain mr-3">
+                        <div>
+                            <h3 class="text-lg font-bold text-soges-gold">GROUP SOGES</h3>
+                            <p class="text-xs text-gray-400">INTERNATIONAL</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-400 mb-4 text-sm">
+                        Votre partenaire de confiance pour tous vos besoins de sécurité et d'entretien depuis plus de 14 ans en Afrique de l'Ouest.
+                    </p>
+                    <p class="text-gray-400 font-semibold text-sm">
+                        Votre Sécurité et votre propriété sont notre Affaire
+                    </p>
+                </div>
+                <!-- Contact -->
+                <div>
+                    <h3 class="text-lg font-bold text-soges-gold mb-4 sm:mb-6">Contactez-nous</h3>
+                    <div class="space-y-3 sm:space-y-4">
+                        <div class="flex items-start">
+                            <div class="text-soges-gold mr-2 sm:mr-3 mt-1">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <p class="text-gray-400 text-sm">
+                                Quartier Terminus en Face du Ministre de l'Environnement, Niamey, Niger
+                            </p>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="text-soges-gold mr-2 sm:mr-3 mt-1">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <p class="text-gray-400 text-sm">
+                                sogesniger_securite@yahoo.com
+                            </p>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="text-soges-gold mr-2 sm:mr-3 mt-1">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <p class="text-gray-400 text-sm">
+                                20 33 07 99 / 98 38 04 04
+                            </p>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="text-soges-gold mr-2 sm:mr-3 mt-1">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <p class="text-gray-400 text-sm">
+                                Lun-Ven: 8h-18h, Sam: 9h-13h
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-bold text-soges-gold mb-4 sm:mb-6">Liens Rapides</h3>
+                    <ul class="space-y-2 sm:space-y-3">
+                        <li>
+                            <a href="index.html#accueil" class="text-gray-400 hover:text-soges-gold transition-colors text-sm">
+                                <i class="fas fa-chevron-right mr-2 text-soges-gold"></i>
+                                Accueil
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-gray-400 hover:text-soges-gold transition-colors text-sm">
+                                <i class="fas fa-chevron-right mr-2 text-soges-gold"></i>
+                                À propos
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html#services" class="text-gray-400 hover:text-soges-gold transition-colors text-sm">
+                                <i class="fas fa-chevron-right mr-2 text-soges-gold"></i>
+                                Services
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html#presence" class="text-gray-400 hover:text-soges-gold transition-colors text-sm">
+                                <i class="fas fa-chevron-right mr-2 text-soges-gold"></i>
+                                Présence
+                            </a>
+                        </li>
+                        <li>
+                            <a href="index.html#contact" class="text-gray-400 hover:text-soges-gold transition-colors text-sm">
+                                <i class="fas fa-chevron-right mr-2 text-soges-gold"></i>
+                                Contact
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-6 sm:pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-500 text-xs sm:text-sm mb-3 md:mb-0">
+                        © 2025 GROUP SOGES INTERNATIONAL. Tous droits réservés.
+                    </p>
+                    <p class="text-gray-500 text-xs sm:text-sm">
+                        Conçu et développé par <a href="#" class="text-soges-gold hover:underline">NETCRAFTER</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#" id="back-to-top" class="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 bg-soges-gold text-white w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center shadow-lg transition-all transform scale-0 hover:bg-opacity-80 z-50">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', function() {
+                document.getElementById('mobile-menu').classList.add('hidden');
+            });
+        });
+
+        // Initialize AOS
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true,
+                mirror: false,
+                disable: window.innerWidth < 768 ? true : false // Disable on mobile for better performance
+            });
+
+            // Back to Top Button with better performance
+            const backToTopButton = document.getElementById('back-to-top');
+            let isScrolling = false;
+            
+            window.addEventListener('scroll', function() {
+                if (!isScrolling) {
+                    isScrolling = true;
+                    
+                    // Use requestAnimationFrame for smoother animation
+                    requestAnimationFrame(function() {
+                        if (window.pageYOffset > 300) {
+                            backToTopButton.classList.remove('scale-0');
+                            backToTopButton.classList.add('scale-100');
+                        } else {
+                            backToTopButton.classList.remove('scale-100');
+                            backToTopButton.classList.add('scale-0');
+                        }
+                        
+                        isScrolling = false;
+                    });
+                }
+            });
+
+            // Smooth scrolling for anchor links with better performance
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        // Calculate offset based on screen size
+                        const offset = window.innerWidth < 768 ? 60 : 70;
+                        
+                        window.scrollTo({
+                            top: targetElement.offsetTop - offset,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Add resize listener for better responsiveness
+            window.addEventListener('resize', function() {
+                if (window.innerWidth >= 768) {
+                    document.getElementById('mobile-menu').classList.add('hidden');
+                }
+                
+                // Update AOS for screen resizes
+                AOS.refresh();
+            });
+        });
+    </script>
+</body>
+</html>

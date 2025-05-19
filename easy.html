@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easy Deals - Solutions Technologiques</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        .hero-bg {
+            background: linear-gradient(45deg, #3498db, #2c3e50);
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+        .service-card {
+            transition: all 0.3s ease;
+        }
+        .service-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        .contact-icon {
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        .contact-icon:hover {
+            transform: scale(1.2);
+        }
+        @media (max-width: 768px) {
+            .hero-bg {
+                clip-path: none;
+                padding-bottom: 4rem;
+            }
+            .service-card {
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+    <header class="hero-bg text-white py-16 md:py-24 px-4 md:px-6 relative">
+        <div class="container mx-auto flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 text-center md:text-left mb-8 md:mb-0">
+                <h1 class="text-3xl md:text-5xl font-bold mb-4">Netcrafter</h1>
+                <p class="text-lg md:text-xl mb-6 opacity-80">L'artisan du Numérique</p>
+                <div class="flex flex-col md:flex-row justify-center md:justify-start space-y-4 md:space-y-0 md:space-x-4">
+                    <button class="bg-white text-blue-600 px-6 py-3 rounded-full font-semibold hover:bg-blue-50 transition">
+                        Nos Services
+                    </button>
+                    <button class="border-2 border-white text-white px-6 py-3 rounded-full hover:bg-white hover:text-blue-600 transition">
+                        Contact
+                    </button>
+                </div>
+            </div>
+            <div class="md:w-1/2">
+                <div class="bg-white/20 backdrop-blur-lg p-4 md:p-6 rounded-2xl">
+                    <img src="images/netcrafter.png" alt="Easy Deals Services" class="w-full rounded-xl shadow-2xl">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="container mx-auto px-4 md:px-6 py-16 md:py-24">
+        <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Nos Services Experts</h2>
+        <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+            <div class="service-card bg-white p-6 rounded-2xl text-center shadow-lg">
+                <div class="text-4xl md:text-5xl text-blue-600 mb-4">🖥️</div>
+                <h3 class="text-xl font-semibold mb-3">Informatique Bureautique</h3>
+                <p class="text-sm">Solutions complètes de gestion</p>
+            </div>
+            <div class="service-card bg-white p-6 rounded-2xl text-center shadow-lg">
+                <div class="text-4xl md:text-5xl text-blue-600 mb-4">📹</div>
+                <h3 class="text-xl font-semibold mb-3">Vidéosurveillance</h3>
+                <p class="text-sm">Systèmes de sécurité avancés</p>
+            </div>
+            <div class="service-card bg-white p-6 rounded-2xl text-center shadow-lg">
+                <div class="text-4xl md:text-5xl text-blue-600 mb-4">🌐</div>
+                <h3 class="text-xl font-semibold mb-3">Réseau Internet</h3>
+                <p class="text-sm">Infrastructure performante</p>
+            </div>
+            <div class="service-card bg-white p-6 rounded-2xl text-center shadow-lg">
+                <div class="text-4xl md:text-5xl text-blue-600 mb-4">☎️</div>
+                <h3 class="text-xl font-semibold mb-3">Téléphonie PABX</h3>
+                <p class="text-sm">Communication intégrée</p>
+            </div>
+            <div class="service-card bg-white p-6 rounded-2xl text-center shadow-lg">
+                <div class="text-4xl md:text-5xl text-blue-600 mb-4">🛒</div>
+                <h3 class="text-xl font-semibold mb-3">E-commerce</h3>
+                <p class="text-sm">Plateformes de vente en ligne</p>
+            </div>
+            <div class="service-card bg-white p-6 rounded-2xl text-center shadow-lg">
+                <div class="text-4xl md:text-5xl text-blue-600 mb-4">🌐</div>
+                <h3 class="text-xl font-semibold mb-3">Création Web</h3>
+                <p class="text-sm">Sites et applications web</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="bg-gray-100 py-16 md:py-24 px-4 md:px-6">
+        <div class="container mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Formations & Import</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+                    <h3 class="text-xl md:text-2xl font-semibold mb-4">Domaines de Formation</h3>
+                    <ul class="list-disc pl-5 space-y-2 text-sm md:text-base">
+                        <li>Informatique Bureautique</li>
+                        <li>Vidéosurveillance</li>
+                        <li>Réseau Internet</li>
+                        <li>Téléphonie PABX</li>
+                        <li>E-commerce</li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 md:p-8 rounded-2xl shadow-lg">
+                    <h3 class="text-xl md:text-2xl font-semibold mb-4">Import de Chine</h3>
+                    <p class="text-sm md:text-base">Solutions d'approvisionnement technologique</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="contact" class="bg-gray-50 py-16 md:py-24 px-4 md:px-6">
+        <div class="container mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold text-center mb-12">Contactez-Nous</h2>
+            <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg p-8">
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4">Informations de Contact</h3>
+                        <p class="mb-2"><i class="fas fa-map-marker-alt mr-2 text-blue-600"></i> Adresse : Niamey-Niger</p>
+                        <p class="mb-2"><i class="fas fa-phone mr-2 text-blue-600"></i> Téléphone : +227 88 67 21 15</p>
+                        </div>
+                    <div>
+                        <h3 class="text-xl font-semibold mb-4">Nos Réseaux</h3>
+                        <div class="flex space-x-4">
+                            <a href="#" class="contact-icon text-4xl text-blue-700">
+                                <i class="fab fa-facebook"></i>
+                            </a>
+                            <a href="https://wa.me/22788672115" class="contact-icon text-4xl text-green-500">
+                                <i class="fab fa-whatsapp"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-8 text-center">
+                    <a href="https://wa.me/22788672115" class="bg-blue-600 text-white px-6 py-3 rounded-full hover:bg-blue-700 transition">
+                        Discutez avec nous
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white py-8 md:py-16 px-4 md:px-6">
+        <div class="container mx-auto text-center">
+            <p class="text-sm md:text-base">&copy; 2025 Netcrafter - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+        
+        gsap.utils.toArray('.service-card').forEach(card => {
+            gsap.from(card, {
+                opacity: 0,
+                y: 50,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 80%'
+                }
+            });
+        });
+    </script>
+</body>
+</html>
